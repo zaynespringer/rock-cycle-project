@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rock Cycle Ultimate</title>
+<style>
+body { margin:0; font-family:Arial; background:black; color:white; overflow-x:hidden; }
+#bg { position:fixed; top:0; left:0; z-index:-1; }
+.container { padding:40px; text-align:center; }
+
+h1 { color:#00eaff; }
+h2 { color:#ffcc00; }
+
+.word {
+  display:inline-block;
+  margin:15px;
+  padding:12px 25px;
+  border:2px solid #00eaff;
+  cursor:pointer;
+  transition:0.4s;
+  color:#00eaff;
+}
+
+.word:hover { background:#00eaff; color:black; transform:scale(1.1); }
+
+.fade-out { opacity:0; transform:scale(0.8); }
+
+.info { display:none; margin-top:30px; animation:fadeIn 0.6s ease; }
+
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+img { width:220px; margin:10px; border-radius:10px; border:2px solid #ffcc00; }
+
+.credit { position:fixed; top:10px; right:20px; opacity:0.7; color:#ccc; }
+
+.question { margin:20px 0; padding:10px; border:1px solid #444; border-radius:10px; }
+.option { display:block; margin:5px; }
+.clear-btn { color:red; cursor:pointer; font-size:12px; }
+.correct { color:lightgreen; }
+.wrong { color:red; animation:shake 0.4s; }
+
+@keyframes shake {
+  0% { transform:translateX(0); }
+  25% { transform:translateX(-5px); }
+  50% { transform:translateX(5px); }
+  75% { transform:translateX(-5px); }
+  100% { transform:translateX(0); }
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div class="credit">Made by Zayne Springer</div>
+
+<div class="container">
+<h1>The Rock Cycle</h1>
+<p style="color:#aaa;">Click a word to explore</p>
+
+<div id="buttons">
+  <div class="word" onclick="loadSection('igneous')">Igneous</div>
+  <div class="word" onclick="loadSection('sedimentary')">Sedimentary</div>
+  <div class="word" onclick="loadSection('metamorphic')">Metamorphic</div>
+  <div class="word" onclick="loadSection('cycle')">Rock Cycle</div>
+  <div class="word" onclick="loadSection('quiz')">Quiz</div>
+</div>
+
+<div id="content"></div>
+
+</div>
+
+<script>
+const sections = {
+igneous: `<div class="info">
+<h2>Igneous Rocks</h2>
+<p><b>Definition:</b> Igneous rocks form when molten rock material called <b>magma</b> (beneath the Earth’s surface) or <b>lava</b> (on the surface) cools and solidifies into a solid rock.</p>
+<p><b>How they form:</b> When magma rises from deep inside the Earth, it begins to cool. If it cools slowly underground, large crystals have time to grow, forming <b>intrusive igneous rocks</b> such as granite. If lava erupts and cools quickly on the surface, crystals do not have time to grow, forming <b>extrusive igneous rocks</b> such as basalt.</p>
+<p><b>Characteristics:</b> Igneous rocks are usually very hard, do not contain fossils, and often have a crystalline or glassy texture. They are resistant to weathering and can form mountains and landforms.</p>
+<p style="color:#00ffcc;"><b>Examples and Uses:</b> Granite – buildings and countertops, Basalt – roads, Obsidian – tools and decoration, Pumice – cleaning and polishing</p>
+
+<p>Granite Rock Sample</p>
+<img src="https://iili.io/Bs0CXt4.jpg">
+<p>Basalt Rock</p>
+<img src="https://iili.io/Bs0BRBS.jpg">
+<p>Obsidian Black Glass</p>
+<img src="https://iili.io/Bs0q9x2.jpg">
+<p>Pumice Stone Holes</p>
+<img src="https://iili.io/Bs0Klkv.webp">
+</div>`,
+
+sedimentary: `<div class="info">
+<h2>Sedimentary Rocks</h2>
+<p><b>Definition:</b> Sedimentary rocks are formed from small pieces of rock, minerals, and organic material called <b>sediments</b> that are deposited, compacted, and cemented together over time.</p>
+<p><b>How they form:</b> Weathering breaks down rocks into sediments. These sediments are transported by wind, water, or ice and settle in layers in rivers, lakes, or oceans. Over long periods, pressure compacts the layers and minerals act like glue to cement them into solid rock.</p>
+<p><b>Characteristics:</b> Sedimentary rocks often form in visible <b>layers</b> and may contain <b>fossils</b> because they form at low temperatures that do not destroy organic remains. They are generally softer than igneous rocks.</p>
+<p style="color:#00ffcc;"><b>Examples and Uses:</b> Sandstone – construction, Limestone – cement production, Shale – bricks and tiles, Conglomerate – building material</p>
+
+<p>Sandstone Layers</p>
+<img src="https://iili.io/Bs0FxVt.webp">
+<p>Limstone Rock</p>
+<img src="https://iili.io/Bs03Jaf.jpg">
+<p>Shale Rock Layers</p>
+<img src="https://iili.io/Bs0dHVn.jpg">
+<p>Conglomerate Rock Pebbles</p>
+<img src="https://iili.io/Bs09eWu.webp">
+</div>`,
+
+metamorphic: `<div class="info">
+<h2>Metamorphic Rocks</h2>
+<p><b>Definition:</b> Metamorphic rocks are rocks that have been changed from their original form by <b>heat</b> and <b>pressure</b> deep within the Earth without melting.</p>
+<p><b>How they form:</b> When rocks are buried deep underground, they are exposed to high temperatures and intense pressure. This causes the minerals inside the rock to rearrange and form new structures, changing the rock’s appearance and properties.</p>
+<p><b>Characteristics:</b> Metamorphic rocks are usually very hard and may show <b>banding</b> or layered patterns. They do not contain fossils because the heat destroys any organic material. They often have a shiny or crystalline appearance.</p>
+<p style="color:#00ffcc;"><b>Examples and Uses:</b> Marble – statues and tiles, Slate – roofing, Quartzite – construction, Gneiss – building stone</p>
+
+<p>Marble Stone</p>
+<img src="https://iili.io/Bslsbuj.webp">
+<p>Slate Roof Tiles</p>
+<img src="https://iili.io/BslQ3s2.webp">
+<p>Quartzite Rock</p>
+<img src="https://iili.io/BslP4Rf.jpg">
+<p>Gneiss</p>
+<img src="https://iili.io/BsltrJ9.jpg">
+</div>`,
+
+cycle: `<div class="info">
+<h2>Rock Cycle</h2>
+<p><b>Process:</b> Magma → Igneous → Sediments → Sedimentary → Metamorphic → Magma</p>
+<p style="color:#00ffcc;">This cycle repeats continuously.</p>
+
+<p>Rock Cycle Image (Search: rock cycle diagram labeled)</p>
+<img src="https://iili.io/Bsl6J7j.png">
+</div>`,
+
+quiz: `<div class="info">
+<h2 style="color:#ff4d4d;">Quiz</h2>
+
+<div class="question" data-answer="a">
+1. What forms igneous rock?
+<span class="clear-btn" onclick="clearAnswer(this)">clear</span>
+<label class="option"><input type="radio" name="q1" value="a"> Cooling magma</label>
+<label class="option"><input type="radio" name="q1" value="b"> Pressure</label>
+<label class="option"><input type="radio" name="q1" value="c"> Fossils</label>
+</div>
+
+<div class="question" data-answer="b">
+2. Which rock contains fossils?
+<span class="clear-btn" onclick="clearAnswer(this)">clear</span>
+<label class="option"><input type="radio" name="q2" value="a"> Igneous</label>
+<label class="option"><input type="radio" name="q2" value="b"> Sedimentary</label>
+<label class="option"><input type="radio" name="q2" value="c"> Metamorphic</label>
+</div>
+
+<div class="question" data-answer="b">
+3. What forms metamorphic rock?
+<span class="clear-btn" onclick="clearAnswer(this)">clear</span>
+<label class="option"><input type="radio" name="q3" value="a"> Cooling</label>
+<label class="option"><input type="radio" name="q3" value="b"> Heat and pressure</label>
+<label class="option"><input type="radio" name="q3" value="c"> Wind</label>
+</div>
+
+<div class="question" data-answer="c">
+4. What breaks rocks into sediment?
+<span class="clear-btn" onclick="clearAnswer(this)">clear</span>
+<label class="option"><input type="radio" name="q4" value="a"> Cooling</label>
+<label class="option"><input type="radio" name="q4" value="b"> Pressure</label>
+<label class="option"><input type="radio" name="q4" value="c"> Weathering</label>
+</div>
+
+<div class="question" data-answer="a">
+5. What turns sediment into rock?
+<span class="clear-btn" onclick="clearAnswer(this)">clear</span>
+<label class="option"><input type="radio" name="q5" value="a"> Compaction</label>
+<label class="option"><input type="radio" name="q5" value="b"> Melting</label>
+<label class="option"><input type="radio" name="q5" value="c"> Cooling</label>
+</div>
+
+<div class="word" id="submitBtn" onclick="submitQuiz()" style="opacity:0.5;pointer-events:none;">Submit</div>
+<div id="result"></div>
+</div>`
+};
+
+function loadSection(type) {
+  const btnArea = document.getElementById('buttons');
+  const content = document.getElementById('content');
+
+  btnArea.classList.add('fade-out');
+
+  setTimeout(() => {
+    btnArea.style.display = 'none';
+    content.innerHTML = sections[type] + `<br><div class='word' onclick='goBack()'>Back</div>`;
+    document.querySelector('.info').style.display = 'block';
+  }, 400);
+}
+
+function goBack() {
+  document.getElementById('content').innerHTML = '';
+  const btnArea = document.getElementById('buttons');
+  btnArea.style.display = 'block';
+  btnArea.classList.remove('fade-out');
+}
+
+document.addEventListener('change', () => {
+  let all=true;
+  for(let i=1;i<=5;i++){
+    if(!document.querySelector(`input[name=q${i}]:checked`)) all=false;
+  }
+  const btn=document.getElementById('submitBtn');
+  if(btn){ btn.style.opacity=all?1:0.5; btn.style.pointerEvents=all?'auto':'none'; }
+});
+
+function clearAnswer(el){ el.parentElement.querySelectorAll('input').forEach(i=>i.checked=false); }
+
+function submitQuiz(){
+  let score=0;
+  document.querySelectorAll('.question').forEach(q=>{
+    const correct=q.dataset.answer;
+    const selected=q.querySelector('input:checked');
+    if(selected && selected.value===correct){score++;q.classList.add('correct');}
+    else{q.classList.add('wrong');}
+  });
+  document.getElementById('result').innerHTML=`<h3 style='color:#00ffcc;'>Score: ${score}/5</h3>`;
+}
+
+const canvas=document.getElementById('bg');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+let particles=[];
+for(let i=0;i<100;i++){particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,size:Math.random()*3,sx:-0.5,sy:1});}
+function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.x+=p.sx;p.y+=p.sy;if(p.y>canvas.height){p.y=0;p.x=Math.random()*canvas.width;}if(p.x<0)p.x=canvas.width;ctx.fillStyle='white';ctx.fillRect(p.x,p.y,p.size,p.size);});requestAnimationFrame(animate);}animate();
+</script>
+
+</body>
+</html>
